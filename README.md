@@ -1,2 +1,9 @@
 # E-Commerce
-Build Web Service with .Net Framework Core 6. V1.01
+Build Web Service with .Net Framework Core 6. 
+
+if you have an idea pleas message me in my social media.
+
+Thanks
+
+This Wev Service Version 1
+V1.01
