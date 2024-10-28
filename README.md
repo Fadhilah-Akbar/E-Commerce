@@ -1,7 +1,7 @@
 # E-Commerce
 Build Web Service with .Net Framework Core 6. 
 
-if you have an idea pleas message me in my social media.
+if you have an idea please message me in my social media.
 
 Thanks
 
