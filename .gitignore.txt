@@ -1,0 +1,46 @@
+# Umum untuk proyek .NET
+**/bin/
+**/obj/
+**/appsettings*.json
+.vs/
+db.sql
+
+# Proyek API
+ECommerce_API/bin/
+ECommerce_API/obj/
+ECommerce_API/appsettings*.json
+
+# Proyek Consume
+ECommerce_Consume/bin/
+ECommerce_Consume/obj/
+ECommerce_Consume/appsettings*.json
+
+# Pengaturan pengguna dan sistem di Visual Studio
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Cache paket NuGet dan direktori dependencies
+**/packages/
+*.nupkg
+.nuget/
+project.lock.json
+project.fragment.lock.json
+
+# Direktori publish
+publish/
+out/
+artifacts/
+
+# File sementara dari sistem operasi
+.DS_Store
+Thumbs.db
+ehthumbs.db
+.idea/
+*.log
+
+# Direktori build dan file otomatis lainnya
+GeneratedFiles/
+_DebugPublicTest/
