@@ -23,6 +23,7 @@ namespace ECommerce_API.Models
         public virtual DbSet<MProduct> MProducts { get; set; } = null!;
         public virtual DbSet<MRole> MRoles { get; set; } = null!;
         public virtual DbSet<MShippingMethod> MShippingMethods { get; set; } = null!;
+        public virtual DbSet<MToken> MTokens { get; set; } = null!;
         public virtual DbSet<MUser> MUsers { get; set; } = null!;
         public virtual DbSet<TCart> TCarts { get; set; } = null!;
         public virtual DbSet<TOrder> TOrders { get; set; } = null!;
@@ -33,6 +34,7 @@ namespace ECommerce_API.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=localhost;Initial Catalog=DB_Market_Place;user id=sa;Password=P@ssw0rd; Command Timeout=300");
             }
         }
@@ -45,12 +47,10 @@ namespace ECommerce_API.Models
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.ModifiedOn).HasDefaultValueSql("(getdate())");
-
                 entity.HasOne(d => d.Biodata)
                     .WithMany(p => p.MBiodataAddresses)
                     .HasForeignKey(d => d.BiodataId)
-                    .HasConstraintName("FK__m_biodata__bioda__4CA06362");
+                    .HasConstraintName("FK__m_biodata__bioda__4D94879B");
             });
 
             modelBuilder.Entity<MBiodatum>(entity =>
@@ -59,12 +59,10 @@ namespace ECommerce_API.Models
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.ModifiedOn).HasDefaultValueSql("(getdate())");
-
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.MBiodata)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__m_biodata__user___46E78A0C");
+                    .HasConstraintName("FK__m_biodata__user___48CFD27E");
             });
 
             modelBuilder.Entity<MCategory>(entity =>
@@ -72,8 +70,6 @@ namespace ECommerce_API.Models
                 entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.ModifiedOn).HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<MMerchant>(entity =>
@@ -81,8 +77,6 @@ namespace ECommerce_API.Models
                 entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.ModifiedOn).HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.MMerchants)
@@ -97,32 +91,25 @@ namespace ECommerce_API.Models
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.ModifiedOn).HasDefaultValueSql("(getdate())");
-
                 entity.Property(e => e.Stock).HasDefaultValueSql("((0))");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.MProducts)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__m_product__categ__5EBF139D");
+                    .HasConstraintName("FK__m_product__categ__5CD6CB2B");
 
                 entity.HasOne(d => d.Merchant)
                     .WithMany(p => p.MProducts)
                     .HasForeignKey(d => d.MerchantId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__m_product__merch__5DCAEF64");
+                    .HasConstraintName("FK__m_product__merch__5BE2A6F2");
             });
 
             modelBuilder.Entity<MRole>(entity =>
             {
-                entity.HasKey(e => e.RoleId)
-                    .HasName("PK__m_roles__760965CCD0D2C3CA");
-
                 entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.ModifiedOn).HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<MShippingMethod>(entity =>
@@ -130,8 +117,15 @@ namespace ECommerce_API.Models
                 entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+            });
 
-                entity.Property(e => e.ModifiedOn).HasDefaultValueSql("(getdate())");
+            modelBuilder.Entity<MToken>(entity =>
+            {
+                entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsExpired).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<MUser>(entity =>
@@ -140,12 +134,10 @@ namespace ECommerce_API.Models
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.ModifiedOn).HasDefaultValueSql("(getdate())");
-
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.MUsers)
                     .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK__m_users__role_id__412EB0B6");
+                    .HasConstraintName("FK__m_users__role_id__440B1D61");
             });
 
             modelBuilder.Entity<TCart>(entity =>
@@ -154,19 +146,17 @@ namespace ECommerce_API.Models
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.ModifiedOn).HasDefaultValueSql("(getdate())");
-
                 entity.Property(e => e.Quantity).HasDefaultValueSql("((1))");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.TCarts)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__t_cart__product___02084FDA");
+                    .HasConstraintName("FK__t_cart__product___7B5B524B");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TCarts)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__t_cart__user_id__01142BA1");
+                    .HasConstraintName("FK__t_cart__user_id__7A672E12");
             });
 
             modelBuilder.Entity<TOrder>(entity =>
@@ -175,8 +165,6 @@ namespace ECommerce_API.Models
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.ModifiedOn).HasDefaultValueSql("(getdate())");
-
                 entity.Property(e => e.OrderDate).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.OrderStatus).HasDefaultValueSql("('pending')");
@@ -184,12 +172,12 @@ namespace ECommerce_API.Models
                 entity.HasOne(d => d.ShippingAddress)
                     .WithMany(p => p.TOrders)
                     .HasForeignKey(d => d.ShippingAddressId)
-                    .HasConstraintName("FK__t_orders__shippi__6754599E");
+                    .HasConstraintName("FK__t_orders__shippi__6477ECF3");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TOrders)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__t_orders__user_i__66603565");
+                    .HasConstraintName("FK__t_orders__user_i__6383C8BA");
             });
 
             modelBuilder.Entity<TOrderItem>(entity =>
@@ -198,32 +186,28 @@ namespace ECommerce_API.Models
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.ModifiedOn).HasDefaultValueSql("(getdate())");
-
                 entity.Property(e => e.TotalPrice).HasComputedColumnSql("([quantity]*[price])", false);
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.TOrderItems)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK__t_order_i__order__6D0D32F4");
+                    .HasConstraintName("FK__t_order_i__order__693CA210");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.TOrderItems)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__t_order_i__produ__6E01572D");
+                    .HasConstraintName("FK__t_order_i__produ__6A30C649");
             });
 
             modelBuilder.Entity<TPayment>(entity =>
             {
                 entity.HasKey(e => e.PaymentId)
-                    .HasName("PK__t_paymen__ED1FC9EAF655E27A");
+                    .HasName("PK__t_paymen__ED1FC9EA902A8995");
 
                 entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.ModifiedOn).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.PaymentDate).HasDefaultValueSql("(getdate())");
 
@@ -232,7 +216,7 @@ namespace ECommerce_API.Models
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.TPayments)
                     .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK__t_payment__order__75A278F5");
+                    .HasConstraintName("FK__t_payment__order__70DDC3D8");
             });
 
             OnModelCreatingPartial(modelBuilder);

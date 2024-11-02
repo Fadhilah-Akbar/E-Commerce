@@ -6,41 +6,40 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce_API.Models
 {
-    [Table("m_role")]
+    [Table("m_roles")]
+    [Index("RoleName", Name = "UQ__m_roles__783254B18C2E475D", IsUnique = true)]
     public partial class MRole
     {
         public MRole()
         {
-            MMenuRoles = new HashSet<MMenuRole>();
+            MUsers = new HashSet<MUser>();
         }
 
         [Key]
         [Column("id")]
-        public long Id { get; set; }
-        [Column("name")]
-        [StringLength(20)]
-        [Unicode(false)]
-        public string? Name { get; set; }
-        [Column("code")]
-        [StringLength(20)]
-        [Unicode(false)]
-        public string? Code { get; set; }
+        public int Id { get; set; }
+        [Column("role_name")]
+        [StringLength(50)]
+        public string RoleName { get; set; } = null!;
+        [Column("description")]
+        [StringLength(255)]
+        public string? Description { get; set; }
         [Column("created_by")]
-        public long CreatedBy { get; set; }
+        public int? CreatedBy { get; set; }
         [Column("created_on", TypeName = "datetime")]
-        public DateTime CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
         [Column("modified_by")]
-        public long? ModifiedBy { get; set; }
+        public int? ModifiedBy { get; set; }
         [Column("modified_on", TypeName = "datetime")]
         public DateTime? ModifiedOn { get; set; }
         [Column("deleted_by")]
-        public long? DeletedBy { get; set; }
+        public int? DeletedBy { get; set; }
         [Column("deleted_on", TypeName = "datetime")]
         public DateTime? DeletedOn { get; set; }
-        [Column("is_delete")]
-        public bool IsDelete { get; set; }
+        [Column("is_deleted")]
+        public bool? IsDeleted { get; set; }
 
         [InverseProperty("Role")]
-        public virtual ICollection<MMenuRole> MMenuRoles { get; set; }
+        public virtual ICollection<MUser> MUsers { get; set; }
     }
 }

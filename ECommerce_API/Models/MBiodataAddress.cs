@@ -9,51 +9,50 @@ namespace ECommerce_API.Models
     [Table("m_biodata_address")]
     public partial class MBiodataAddress
     {
+        public MBiodataAddress()
+        {
+            TOrders = new HashSet<TOrder>();
+        }
+
         [Key]
         [Column("id")]
-        public long Id { get; set; }
+        public int Id { get; set; }
         [Column("biodata_id")]
-        public long? BiodataId { get; set; }
-        [Column("label")]
-        [StringLength(15)]
-        [Unicode(false)]
-        public string? Label { get; set; }
-        [Column("recipient")]
-        [StringLength(100)]
-        [Unicode(false)]
-        public string? Recipient { get; set; }
-        [Column("recipient_phone_number")]
+        public int BiodataId { get; set; }
+        [Column("address")]
         [StringLength(255)]
-        [Unicode(false)]
-        public string? RecipientPhoneNumber { get; set; }
-        [Column("location_id")]
-        public long? LocationId { get; set; }
+        public string Address { get; set; } = null!;
+        [Column("city")]
+        [StringLength(100)]
+        public string? City { get; set; }
         [Column("postal_code")]
         [StringLength(10)]
-        [Unicode(false)]
         public string? PostalCode { get; set; }
-        [Column("address", TypeName = "text")]
-        public string? Address { get; set; }
+        [Column("country")]
+        [StringLength(100)]
+        public string? Country { get; set; }
+        [Column("phone_number")]
+        [StringLength(15)]
+        public string? PhoneNumber { get; set; }
         [Column("created_by")]
-        public long CreatedBy { get; set; }
+        public int? CreatedBy { get; set; }
         [Column("created_on", TypeName = "datetime")]
-        public DateTime CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
         [Column("modified_by")]
-        public long? ModifiedBy { get; set; }
+        public int? ModifiedBy { get; set; }
         [Column("modified_on", TypeName = "datetime")]
         public DateTime? ModifiedOn { get; set; }
         [Column("deleted_by")]
-        public long? DeletedBy { get; set; }
+        public int? DeletedBy { get; set; }
         [Column("deleted_on", TypeName = "datetime")]
         public DateTime? DeletedOn { get; set; }
-        [Column("is_delete")]
-        public bool IsDelete { get; set; }
+        [Column("is_deleted")]
+        public bool? IsDeleted { get; set; }
 
         [ForeignKey("BiodataId")]
         [InverseProperty("MBiodataAddresses")]
-        public virtual MBiodatum? Biodata { get; set; }
-        [ForeignKey("LocationId")]
-        [InverseProperty("MBiodataAddresses")]
-        public virtual MLocation? Location { get; set; }
+        public virtual MBiodatum Biodata { get; set; } = null!;
+        [InverseProperty("ShippingAddress")]
+        public virtual ICollection<TOrder> TOrders { get; set; }
     }
 }

@@ -6,29 +6,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce_API.Models
 {
-    [Table("m_education_level")]
-    public partial class MEducationLevel
+    [Table("m_token")]
+    [Index("Token", Name = "UQ__m_token__CA90DA7A32EA91A1", IsUnique = true)]
+    public partial class MToken
     {
         [Key]
         [Column("id")]
-        public long Id { get; set; }
-        [Column("name")]
-        [StringLength(10)]
-        [Unicode(false)]
-        public string? Name { get; set; }
+        public int Id { get; set; }
+        [Column("token")]
+        [StringLength(255)]
+        public string Token { get; set; } = null!;
+        [Column("is_expired")]
+        public bool? IsExpired { get; set; }
         [Column("created_by")]
-        public long CreatedBy { get; set; }
+        public int? CreatedBy { get; set; }
         [Column("created_on", TypeName = "datetime")]
-        public DateTime CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
         [Column("modified_by")]
-        public long? ModifiedBy { get; set; }
+        public int? ModifiedBy { get; set; }
         [Column("modified_on", TypeName = "datetime")]
         public DateTime? ModifiedOn { get; set; }
         [Column("deleted_by")]
-        public long? DeletedBy { get; set; }
+        public int? DeletedBy { get; set; }
         [Column("deleted_on", TypeName = "datetime")]
         public DateTime? DeletedOn { get; set; }
-        [Column("is_delete")]
-        public bool IsDelete { get; set; }
+        [Column("is_deleted")]
+        public bool? IsDeleted { get; set; }
     }
 }

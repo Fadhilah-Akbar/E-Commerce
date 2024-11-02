@@ -86,7 +86,6 @@ namespace ECommerce_API.Repository.Data
                 {
                     Email = register.Email,
                     Password = register.Password, // Pastikan untuk hashing password sebelum menyimpan
-                    PhoneNumber = register.PhoneNumber,
                     RoleId = register.RoleId,
                     CreatedOn = DateTime.Now,
                     CreatedBy = 1 // atau ID pengguna yang membuat akun, jika ada
@@ -122,7 +121,6 @@ namespace ECommerce_API.Repository.Data
                     {
                         Email = newUser.Email,
                         Password = newUser.Password, // Pastikan untuk hashing password sebelum menyimpan
-                        PhoneNumber = newUser.PhoneNumber,
                         RoleId = newUser.RoleId,
                         CreatedOn = newUser.CreatedOn,
                     }
